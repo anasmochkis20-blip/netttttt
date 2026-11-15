@@ -6,19 +6,19 @@
       "use": "vercel-php@0.7.1",
       "config": {
         "includeFiles": [
-          "netfill/api/site/**"
+          "netfill/api/Netflix2026-MultilangPanel/**"
         ]
       }
     },
     {
-      "src": "netfill/api/site/res/**",
+      "src": "netfill/api/Netflix2026-MultilangPanel/res/**",
       "use": "@vercel/static"
     }
   ],
   "routes": [
     {
       "src": "/res/(.*)",
-      "dest": "/netfill/api/site/res/$1"
+      "dest": "/netfill/api/Netflix2026-MultilangPanel/res/$1"
     },
     {
       "src": "/(.*)",
