@@ -1,6 +1,7 @@
 <?php
 ob_start();
-error_reporting(0);
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
 $baseDir = __DIR__ . '/Netflix2026-MultilangPanel';
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
