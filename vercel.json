@@ -1,20 +1,10 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "netfill/api/index.php",
-      "use": "vercel-php@0.7.1",
-      "config": {
-        "includeFiles": [
-          "netfill/api/Netflix2026-MultilangPanel/**"
-        ]
-      }
-    },
-    {
-      "src": "netfill/api/Netflix2026-MultilangPanel/**",
-      "use": "@vercel/static"
+  "functions": {
+    "netfill/api/index.php": {
+      "runtime": "vercel-php@0.7.3",
+      "includeFiles": "netfill/api/Netflix2026-MultilangPanel/**"
     }
-  ],
+  },
   "routes": [
     {
       "src": "/(.*\\.(css|js|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf))",
