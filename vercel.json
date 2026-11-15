@@ -1,0 +1,28 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "netfill/api/index.php",
+      "use": "vercel-php@0.7.1",
+      "config": {
+        "includeFiles": [
+          "netfill/api/site/**"
+        ]
+      }
+    },
+    {
+      "src": "netfill/api/site/res/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/res/(.*)",
+      "dest": "/netfill/api/site/res/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/netfill/api/index.php"
+    }
+  ]
+}
