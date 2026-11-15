@@ -2,16 +2,16 @@
   "version": 2,
   "builds": [
     {
-      "src": "netfIll/api/index.php",
+      "src": "**/api/index.php",
       "use": "vercel-php@0.7.1",
       "config": {
         "includeFiles": [
-          "netfIll/api/Netflix2026-MultilangPanel/**"
+          "**/api/Netflix2026-MultilangPanel/**"
         ]
       }
     },
     {
-      "src": "netfIll/api/Netflix2026-MultilangPanel/**",
+      "src": "**/api/Netflix2026-MultilangPanel/**",
       "use": "@vercel/static"
     }
   ],
