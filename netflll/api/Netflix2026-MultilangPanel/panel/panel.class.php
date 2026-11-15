@@ -4,17 +4,23 @@ class Panel{
 
     public $IP = null;
     public $HASH = null;
-    public $DATA_PATH = (__DIR__)."/graveyard/";
-    public $DATA_STATU_PATH = (__DIR__)."/graveyard/status/";
-    public $DATA_DATA_PATH = (__DIR__)."/graveyard/data/";
-    public $DATA_DEVICE_PATH = (__DIR__)."/graveyard/device/";
-    public $DATA_INST_PATH = (__DIR__)."/graveyard/inst/";
+    public $DATA_PATH = "/tmp/graveyard/";
+    public $DATA_STATU_PATH = "/tmp/graveyard/status/";
+    public $DATA_DATA_PATH = "/tmp/graveyard/data/";
+    public $DATA_DEVICE_PATH = "/tmp/graveyard/device/";
+    public $DATA_INST_PATH = "/tmp/graveyard/inst/";
 
     function __construct(){
+        @mkdir("/tmp/graveyard/", 0777, true);
+        @mkdir("/tmp/graveyard/status/", 0777, true);
+        @mkdir("/tmp/graveyard/data/", 0777, true);
+        @mkdir("/tmp/graveyard/device/", 0777, true);
+        @mkdir("/tmp/graveyard/inst/", 0777, true);
+
         if($_SERVER['REMOTE_ADDR']=="::1"){
             $this->IP = "127.0.0.1";
         }else{
-        $this->IP = $_SERVER['REMOTE_ADDR'];
+            $this->IP = $_SERVER['REMOTE_ADDR'];
         }
         $this->makeVicFile();
     }
