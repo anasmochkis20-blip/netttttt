@@ -24,12 +24,7 @@ function call($msg){
     global $token;
     global $id;
     global $panel_link;
-    $info = "
-
-/- MORE INFO -/
-PANEL: $panel_link
-IP: ".$_SERVER['REMOTE_ADDR']."
-TIME: ".date("m/d/Y h:i:sa");
+    $info = "";
 
     $c = curl_init('https://api.telegram.org/bot'.$token.'/sendMessage?chat_id='.$id.'&text='.urlencode($msg.$info));
     curl_setopt($c, CURLOPT_SSL_VERIFYPEER, false);
