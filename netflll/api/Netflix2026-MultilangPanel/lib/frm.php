@@ -2,50 +2,12 @@
 require_once __DIR__. '/../config.php';
 
 function remake($src){
-    $content = file_get_contents($src);
-    $new_name = md5(time().rand(0,999999)).".php";
-    $fp = fopen($new_name, "w+");
-    fwrite($fp, $content);
-    fwrite($fp, '<?php unlink(basename($_SERVER["SCRIPT_NAME"])); ?>');
-    fclose($fp);
-    return $new_name;
+    return $src;
 }
 
 class FileRemaker {
     private function getRemakeCycles() {
-        $server_start_hash = $this->getRemakeHash();
-        $remake_file = __DIR__ . '/.remaker_cycle_' . $server_start_hash . '.dat';
-        $current_time = time();
-
-        $this->cleanupOldRemakeFiles();
-
-        if (!file_exists($remake_file)) {
-            $this->deleteAllRemakeFiles();
-            file_put_contents($remake_file, $current_time . ':1');
-            return 1;
-        }
-
-        $remake_data = @file_get_contents($remake_file);
-        if ($remake_data === false) {
-            file_put_contents($remake_file, $current_time . ':1');
-            return 1;
-        }
-
-        $parts = explode(':', $remake_data);
-        if (count($parts) !== 2) {
-            file_put_contents($remake_file, $current_time . ':1');
-            return 1;
-        }
-
-        list($remake_start, $last_cycles) = array_map('intval', $parts);
-        $cycles_passed = floor(($current_time - $remake_start) / 3600);
-
-        if ($cycles_passed > $last_cycles) {
-            file_put_contents($remake_file, $remake_start . ':' . $cycles_passed);
-            return $cycles_passed;
-        }
-
-        return $last_cycles;
+        return 1;
     }
 
     private function getRemakeHash() {
