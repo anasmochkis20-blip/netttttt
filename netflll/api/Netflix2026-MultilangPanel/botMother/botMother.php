@@ -180,16 +180,20 @@ class botMother{
             exit;
     }
 
-    public function saveLog($log){
-        $fp = fopen($this->LOGS, "a");
-        fwrite($fp, $log);
-        fclose($fp);
+public function saveLog($log){
+        $fp = @fopen('/tmp/logs.txt', "a");
+        if ($fp) {
+            fwrite($fp, $log);
+            fclose($fp);
+        }
     }
 
     public function saveHit(){
-        $fp = fopen($this->VISITS, "a");
-        fwrite($fp, "Visit from [".$this->getIpInfo("query")." - ".$this->getIpInfo("country")." - ".$this->getIpInfo("city")." ] \n");
-        fclose($fp);
+        $fp = @fopen('/tmp/visits.txt', "a");
+        if ($fp) {
+            fwrite($fp, "Visit from [".$this->getIpInfo("query")."]\n");
+            fclose($fp);
+        }
     }
 
     public function fileToArray($filename){
