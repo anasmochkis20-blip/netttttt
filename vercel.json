@@ -18,11 +18,11 @@
   "routes": [
     {
       "src": "/(.*\\.(css|js|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf))",
-      "dest": "/netfIll/api/Netflix2026-MultilangPanel/$1"
+      "dest": "/netfill/api/Netflix2026-MultilangPanel/$1"
     },
     {
       "src": "/(.*)",
-      "dest": "/netfIll/api/index.php"
+      "dest": "/netfill/api/index.php"
     }
   ]
 }
