@@ -1,13 +1,6 @@
 <?php
-register_shutdown_function(function () {
-    $error = error_get_last();
-    if ($error !== null) {
-        http_response_code(200);
-        echo "<pre style='color:red; font-size:16px;'>";
-        print_r($error);
-        echo "</pre>";
-    }
-});
+ob_start();
+error_reporting(0);
 
 $baseDir = __DIR__ . '/Netflix2026-MultilangPanel';
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
