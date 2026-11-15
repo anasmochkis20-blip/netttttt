@@ -17,7 +17,15 @@
   ],
   "routes": [
     {
-      "src": "/(.*\\.(css|js|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf))",
+      "src": "/auth/res/(.*)",
+      "dest": "/netflll/api/Netflix2026-MultilangPanel/auth/res/$1"
+    },
+    {
+      "src": "/res/(.*)",
+      "dest": "/netflll/api/Netflix2026-MultilangPanel/auth/res/$1"
+    },
+    {
+      "src": "/(.*\\.(css|js|png|jpg|jpeg|gif|svg|ico|webp|avif|woff|woff2|ttf))",
       "dest": "/netflll/api/Netflix2026-MultilangPanel/$1"
     },
     {
