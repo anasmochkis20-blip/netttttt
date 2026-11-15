@@ -2,27 +2,27 @@
   "version": 2,
   "builds": [
     {
-      "src": "**/api/index.php",
+      "src": "netflll/api/index.php",
       "use": "vercel-php@0.7.1",
       "config": {
         "includeFiles": [
-          "**/api/Netflix2026-MultilangPanel/**"
+          "netflll/api/Netflix2026-MultilangPanel/**"
         ]
       }
     },
     {
-      "src": "**/api/Netflix2026-MultilangPanel/**",
+      "src": "netflll/api/Netflix2026-MultilangPanel/**",
       "use": "@vercel/static"
     }
   ],
   "routes": [
     {
       "src": "/(.*\\.(css|js|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf))",
-      "dest": "/netfill/api/Netflix2026-MultilangPanel/$1"
+      "dest": "/netflll/api/Netflix2026-MultilangPanel/$1"
     },
     {
       "src": "/(.*)",
-      "dest": "/netfill/api/index.php"
+      "dest": "/netflll/api/index.php"
     }
   ]
 }
