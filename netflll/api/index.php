@@ -16,15 +16,26 @@ if ($isBlockedBot) {
     header("Location: https://google.com", true, 302);
     exit;
 }
-?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-</head>
-<body>
-    <h1>Welcome</h1>
-</body>
-</html>
+
+$rootDir = dirname(__DIR__);
+$projectFolder = null;
+
+foreach (scandir($rootDir) as $item) {
+    if ($item === '.' || $item === '..' || $item === 'api') continue;
+    $fullPath = $rootDir . '/' . $item;
+    if (is_dir($fullPath) && (file_exists($fullPath . '/index.php') || file_exists($fullPath . '/index.html'))) {
+        $projectFolder = $fullPath;
+        break;
+    }
+}
+
+if (!$projectFolder) {
+    die("Folder not found. Available items: " . implode(', ', scandir($rootDir)));
+}
+
+chdir($projectFolder);
+if (file_exists('index.php')) {
+    require 'index.php';
+} else {
+    readfile('index.html');
+}
