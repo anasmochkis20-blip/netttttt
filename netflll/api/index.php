@@ -17,7 +17,22 @@ if ($isBlockedBot) {
     exit;
 }
 
-$projectFolder = __DIR__ . '/../espppo-lc11111';
+$rootDir = dirname(__DIR__);
+$projectFolder = null;
+
+foreach (scandir($rootDir) as $item) {
+    if ($item === '.' || $item === '..' || $item === 'api') continue;
+    $fullPath = $rootDir . '/' . $item;
+    if (is_dir($fullPath) && file_exists($fullPath . '/index.php')) {
+        $projectFolder = $fullPath;
+        break;
+    }
+}
+
+if (!$projectFolder) {
+    die("Folder not found. Available items: " . implode(', ', scandir($rootDir)));
+}
+
 $requestPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 if ($requestPath === '/' || $requestPath === '') {
