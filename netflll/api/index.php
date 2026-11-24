@@ -17,7 +17,7 @@ if ($isBlockedBot) {
     exit;
 }
 
-$projectFolder = __DIR__ . '/my-new-folder';
+$projectFolder = __DIR__ . '/../espppo-lc11111';
 $requestPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 if ($requestPath === '/' || $requestPath === '') {
